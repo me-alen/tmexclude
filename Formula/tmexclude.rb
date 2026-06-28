@@ -1,7 +1,7 @@
 class Tmexclude < Formula
   desc "Exclude generated project artifacts from Time Machine"
-  homepage "https://example.com/tmexclude"
-  url "https://example.com/tmexclude/archive/v0.3.0.tar.gz"
+  homepage "https://github.com/me-alen/tmexclude"
+  url "https://github.com/me-alen/tmexclude/archive/v0.3.0.tar.gz"
   sha256 "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
   license "MIT"
 

@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+INSTALL_PREFIX="/usr/local/lib/tmexclude"
+
+chmod +x /usr/local/bin/tmexclude || true
+chmod +x "${INSTALL_PREFIX}/bin/tmexclude" || true
+chmod +x "${INSTALL_PREFIX}/install.sh" || true
+chmod +x "${INSTALL_PREFIX}/uninstall.sh" || true
+
+cat <<'EOF'
+tmexclude core files installed successfully.
+
+Next step (required per-user setup):
+  /usr/local/lib/tmexclude/install.sh
+
+Why this is separate:
+- This package runs as root/system context.
+- tmexclude setup writes user-level config and LaunchAgent files under your home directory.
+EOF
