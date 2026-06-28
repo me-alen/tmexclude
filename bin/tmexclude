@@ -1,0 +1,65 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+ROOT_DIR="$(cd "${SCRIPT_DIR}/.." && pwd)"
+
+source "${ROOT_DIR}/lib/core/config.sh"
+source "${ROOT_DIR}/lib/core/logger.sh"
+
+TMX_VERSION="0.3.0"
+
+usage() {
+  cat <<'EOF'
+tmexclude - Time Machine exclusion helper for generated project files
+
+Usage:
+  tmexclude [command] [args]
+
+Commands:
+  scan [--dry-run]     Scan configured roots and apply exclusions
+  list                 Show configured roots and scanner availability
+  check <path>         Check if path is excluded by Time Machine
+  remove <path>        Remove exclusion for path
+  stats                Show estimated excluded size
+  doctor               Diagnose configuration/state/exclusion issues
+  fix                  Apply safe auto-fixes from doctor findings
+  watch                Poll configured roots and auto-exclude generated paths
+  health               High-level operational status
+  config [--path]      Print config path or open config in editor
+  help                 Show this help
+  version              Print version
+EOF
+}
+
+dispatch() {
+  local command="${1:-scan}"
+  shift || true
+
+  case "${command}" in
+    scan) source "${ROOT_DIR}/lib/commands/scan.sh"; tmx_cmd_scan "$@" ;;
+    list) source "${ROOT_DIR}/lib/commands/list.sh"; tmx_cmd_list "$@" ;;
+    check) source "${ROOT_DIR}/lib/commands/check.sh"; tmx_cmd_check "$@" ;;
+    remove) source "${ROOT_DIR}/lib/commands/remove.sh"; tmx_cmd_remove "$@" ;;
+    stats) source "${ROOT_DIR}/lib/commands/stats.sh"; tmx_cmd_stats "$@" ;;
+    doctor) source "${ROOT_DIR}/lib/commands/doctor.sh"; tmx_cmd_doctor "$@" ;;
+    fix) source "${ROOT_DIR}/lib/commands/fix.sh"; tmx_cmd_fix "$@" ;;
+    watch) source "${ROOT_DIR}/lib/commands/watch.sh"; tmx_cmd_watch "$@" ;;
+    health) source "${ROOT_DIR}/lib/commands/health.sh"; tmx_cmd_health "$@" ;;
+    config) source "${ROOT_DIR}/lib/commands/config.sh"; tmx_cmd_config "$@" ;;
+    help|-h|--help) usage ;;
+    version|--version|-v) echo "${TMX_VERSION}" ;;
+    *)
+      tmx_error "Unknown command: ${command}"
+      usage
+      exit 1
+      ;;
+  esac
+}
+
+main() {
+  tmx_init_config
+  dispatch "$@"
+}
+
+main "$@"

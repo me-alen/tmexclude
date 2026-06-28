@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+if [[ -t 1 ]]; then
+  TMX_COLOR_RED=$'\033[31m'
+  TMX_COLOR_GREEN=$'\033[32m'
+  TMX_COLOR_YELLOW=$'\033[33m'
+  TMX_COLOR_BLUE=$'\033[34m'
+  TMX_COLOR_RESET=$'\033[0m'
+else
+  TMX_COLOR_RED=""
+  TMX_COLOR_GREEN=""
+  TMX_COLOR_YELLOW=""
+  TMX_COLOR_BLUE=""
+  TMX_COLOR_RESET=""
+fi

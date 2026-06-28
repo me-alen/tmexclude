@@ -1,0 +1,22 @@
+roots:
+  paths:
+    - ~/Projects
+
+ignore:
+  dir_names:
+    - Trash
+    - Archive
+    - Backups
+
+behavior:
+  dry_run: false
+  follow_symlinks: false
+  max_depth: 6
+
+watch:
+  enabled: false
+  interval_seconds: 20
+  notify: false
+
+plugins:
+  dir: ~/.config/tmexclude/plugins.d
