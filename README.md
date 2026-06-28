@@ -3,6 +3,17 @@
 `tmexclude` is a macOS CLI that excludes generated/rebuildable project artifacts
 from Time Machine while keeping source code backed up.
 
+## Quick Start (PKG flow)
+
+```bash
+# 1) Install the .pkg first, then:
+tmexclude setup --start-agent
+tmexclude list
+tmexclude scan --dry-run
+tmexclude scan
+tmexclude stats
+```
+
 ## Installation
 
 ### Option 1: Local repo install
@@ -52,6 +63,7 @@ tmexclude list
 - `tmexclude watch`
 - `tmexclude health`
 - `tmexclude setup [--start-agent]`
+- `tmexclude --start-agent` (shortcut for `tmexclude setup --start-agent`)
 - `tmexclude start-agent`
 - `tmexclude stop-agent`
 - `tmexclude uninstall [--all]`
@@ -100,6 +112,8 @@ cp config.example ~/.config/tmexclude/config.ini
 - `stats` reports estimate of currently excluded path sizes.
 - `doctor` detects stale state and exclusion drift.
 - `watch` is polling-based and intended for LaunchAgent usage.
+- `scan` shows live progress while processing candidates.
+- `setup` creates user-level config, plugin dir, logs, and LaunchAgent plist.
 - Optional YAML config is supported (`config.example.yaml`) by setting `TMX_CONFIG_PATH`.
 - Hook plugins can be installed under `~/.config/tmexclude/plugins.d`.
 
