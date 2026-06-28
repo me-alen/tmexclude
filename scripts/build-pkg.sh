@@ -66,4 +66,6 @@ pkgbuild "${PKGBUILD_ARGS[@]}" "${DIST_DIR}/${PKG_NAME}"
 
 echo "Built package: ${DIST_DIR}/${PKG_NAME}"
 echo "Install command after opening package:"
-echo "  /usr/local/lib/tmexclude/install.sh"
+echo "  tmexclude setup"
+echo "Optional immediate watcher start:"
+echo "  tmexclude setup --start-agent"

@@ -13,12 +13,24 @@ From this repository:
 ./install.sh
 ```
 
-### Option 2: Package install (`.pkg`)
-
-After installing the package, run the user setup script:
+Install and start LaunchAgent immediately:
 
 ```bash
-/usr/local/lib/tmexclude/install.sh
+./install.sh --start-agent
+```
+
+### Option 2: Package install (`.pkg`)
+
+After installing the package, run setup from CLI:
+
+```bash
+tmexclude setup
+```
+
+Or setup and start watcher immediately:
+
+```bash
+tmexclude setup --start-agent
 ```
 
 ### Verify installation
@@ -39,6 +51,10 @@ tmexclude list
 - `tmexclude fix`
 - `tmexclude watch`
 - `tmexclude health`
+- `tmexclude setup [--start-agent]`
+- `tmexclude start-agent`
+- `tmexclude stop-agent`
+- `tmexclude uninstall [--all]`
 - `tmexclude config [--path]`
 
 ## Watcher
@@ -54,19 +70,19 @@ tmexclude watch
 Start LaunchAgent now:
 
 ```bash
-launchctl load "$HOME/Library/LaunchAgents/com.tmexclude.watcher.plist"
+tmexclude start-agent
 ```
 
 Check status:
 
 ```bash
-launchctl list | rg tmexclude
+launchctl print "gui/$(id -u)/com.tmexclude.watcher"
 ```
 
 Stop LaunchAgent:
 
 ```bash
-launchctl unload "$HOME/Library/LaunchAgents/com.tmexclude.watcher.plist"
+tmexclude stop-agent
 ```
 
 ## Config
@@ -92,22 +108,19 @@ cp config.example ~/.config/tmexclude/config.ini
 ### Remove user-level install and LaunchAgent
 
 ```bash
+tmexclude uninstall
+```
+
+### Complete uninstall (user + system files)
+
+```bash
+tmexclude uninstall --all
+```
+
+### Alternative fallback script
+
+```bash
 ./uninstall.sh
-```
-
-### If installed via package, remove system files too
-
-```bash
-sudo rm -f /usr/local/bin/tmexclude
-sudo rm -rf /usr/local/lib/tmexclude
-sudo pkgutil --forget com.tmexclude.cli
-```
-
-### Optional: remove user config and logs
-
-```bash
-rm -rf ~/.config/tmexclude
-rm -rf ~/.local/share/tmexclude
 ```
 
 ## Quality

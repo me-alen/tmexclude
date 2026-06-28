@@ -12,7 +12,9 @@ cat <<'EOF'
 tmexclude core files installed successfully.
 
 Next step (required per-user setup):
-  /usr/local/lib/tmexclude/install.sh
+  tmexclude setup
+Or install and start watcher immediately:
+  tmexclude setup --start-agent
 
 Why this is separate:
 - This package runs as root/system context.

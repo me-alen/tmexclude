@@ -17,6 +17,10 @@ Usage:
   tmexclude [command] [args]
 
 Commands:
+  setup [--start-agent] Configure user config and LaunchAgent
+  start-agent           Start tmexclude LaunchAgent
+  stop-agent            Stop tmexclude LaunchAgent
+  uninstall [--all]     Uninstall tmexclude and cleanup files
   scan [--dry-run]     Scan configured roots and apply exclusions
   list                 Show configured roots and scanner availability
   check <path>         Check if path is excluded by Time Machine
@@ -36,7 +40,16 @@ dispatch() {
   local command="${1:-scan}"
   shift || true
 
+  if [[ "${command}" == "--start-agent" ]]; then
+    command="setup"
+    set -- --start-agent "$@"
+  fi
+
   case "${command}" in
+    setup) source "${ROOT_DIR}/lib/commands/setup.sh"; tmx_cmd_setup "$@" ;;
+    start-agent) source "${ROOT_DIR}/lib/commands/setup.sh"; tmx_cmd_start_agent "$@" ;;
+    stop-agent) source "${ROOT_DIR}/lib/commands/setup.sh"; tmx_cmd_stop_agent "$@" ;;
+    uninstall) source "${ROOT_DIR}/lib/commands/uninstall.sh"; tmx_cmd_uninstall "$@" ;;
     scan) source "${ROOT_DIR}/lib/commands/scan.sh"; tmx_cmd_scan "$@" ;;
     list) source "${ROOT_DIR}/lib/commands/list.sh"; tmx_cmd_list "$@" ;;
     check) source "${ROOT_DIR}/lib/commands/check.sh"; tmx_cmd_check "$@" ;;
